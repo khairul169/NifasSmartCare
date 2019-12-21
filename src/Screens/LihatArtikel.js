@@ -10,6 +10,37 @@ const ContentImage = ({height = 100}, source) => {
   return <View style={style} />;
 };
 
+const CONTENT_TEXT = 0;
+const CONTENT_SEPARATOR = 1;
+const CONTENT_IMAGE = 2;
+const CONTENT_LISTS = 3;
+
+const articleName = 'Perawatan Masa Nifas';
+const contents = [
+  [
+    CONTENT_TEXT,
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimad minim veniam, quis nostrud exercitation ullamco laboris nisi utaliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt inculpa qui officia deserunt mollit anim id est laborum.',
+  ],
+  [
+    CONTENT_LISTS,
+    'Berikut daftar blahblah:',
+    ['hahasdsdasdsadasdsasadsada awewaeaw sdasawea awa', 'hehe', 'wew'],
+    true,
+  ],
+  [CONTENT_IMAGE],
+  [
+    CONTENT_TEXT,
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimad minim veniam, quis nostrud exercitation ullamco laboris nisi utaliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt inculpa qui officia deserunt mollit anim id est laborum.',
+  ],
+  [CONTENT_SEPARATOR],
+  [
+    CONTENT_LISTS,
+    'Referensi:',
+    ['WHO. 2016. Dapat diakses pada: http://who.int/'],
+    false,
+  ],
+];
+
 const LihatArtikel = props => {
   const [scrollY] = useState(new Animated.Value(0));
   const headerStyle = [
@@ -53,7 +84,7 @@ const LihatArtikel = props => {
           <Icon name="md-arrow-back" size={20} color="#fff" />
         </CircleButton>
         <Animated.Text style={headerTitleStyle} numberOfLines={1}>
-          Nama Artikel
+          {articleName}
         </Animated.Text>
       </Animated.View>
 
@@ -65,7 +96,7 @@ const LihatArtikel = props => {
         ])}>
         <View style={styles.cover} />
 
-        <Text style={styles.title}>Nama Artikel</Text>
+        <Text style={styles.title}>{articleName}</Text>
         <View style={styles.infoSection}>
           <Icon name="md-time" size={16} color={Colors.secondary} />
           <Text style={styles.infoSectionText}>8 menit baca</Text>
@@ -100,49 +131,32 @@ const LihatArtikel = props => {
 
         <View style={styles.content}>
           <View style={styles.separatorLine} />
-
-          <Text style={styles.contentText}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </Text>
-          <Lists
-            style={styles.contentLists}
-            caption="Berikut daftar blahblah:"
-            items={[
-              'hahasdsdasdsadasdsasadsada awewaeaw sdasawea awa',
-              'hehe',
-              'wew',
-            ]}
-          />
-
-          <ContentImage height={200} />
-
-          <Text style={styles.contentText}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </Text>
-
-          <View style={styles.separatorLine} />
-
-          <Text style={styles.contentText}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </Text>
+          {contents.map((item, index) => {
+            if (item[0] === CONTENT_SEPARATOR) {
+              return <View key={index} style={styles.separatorLine} />;
+            }
+            if (item[0] === CONTENT_TEXT) {
+              return (
+                <Text key={index} style={styles.contentText}>
+                  {item[1]}
+                </Text>
+              );
+            }
+            if (item[0] === CONTENT_IMAGE) {
+              return <ContentImage key={index} height={200} />;
+            }
+            if (item[0] === CONTENT_LISTS) {
+              return (
+                <Lists
+                  key={index}
+                  style={styles.contentLists}
+                  icon={item[3]}
+                  caption={item[1]}
+                  items={item[2]}
+                />
+              );
+            }
+          })}
         </View>
       </Animated.ScrollView>
     </View>

@@ -15,11 +15,13 @@ const List = ({item}) => (
   </View>
 );
 
-const Lists = ({style, items, caption}) => {
+const Lists = ({style, items, caption, icon = true}) => {
+  const containerStyle = [styles.container, icon && {marginLeft: 4}, style];
+  const contentStyle = [styles.content, icon && {marginLeft: 16}];
   return (
-    <View style={[styles.container, style]}>
-      <Icon name="md-quote" size={20} color={Colors.secondary} />
-      <View style={styles.content}>
+    <View style={containerStyle}>
+      {icon && <Icon name="md-quote" size={20} color={Colors.secondary} />}
+      <View style={contentStyle}>
         {caption && <Text style={styles.caption}>{caption}</Text>}
         {items &&
           items.map((item, index) => (
@@ -32,11 +34,9 @@ const Lists = ({style, items, caption}) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginLeft: 4,
     flexDirection: 'row',
   },
   content: {
-    marginLeft: 16,
     flex: 1,
   },
   caption: {
