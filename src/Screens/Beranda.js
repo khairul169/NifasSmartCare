@@ -7,32 +7,59 @@ import {
   FlatList,
   Dimensions,
   StatusBar,
+  TouchableNativeFeedback,
 } from 'react-native';
 import Colors from '../Colors';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const screen = Dimensions.get('screen');
 const isLandscape = screen.width > screen.height;
-const informasiPilihan = [1, 2, 3];
+const related = [1, 2, 3];
 const artikel = [1, 2, 3];
 
-const Beranda = () => {
-  const renderInformasiPilihan = ({index, item}) => (
-    <View style={styles.informasiPilihanCard}>
-      <Text>{index}</Text>
-    </View>
-  );
-
-  const renderArticles = (item, index) => (
-    <View key={index} style={styles.artikel}>
-      <View style={styles.artikelImage} />
-      <View style={styles.artikelContent}>
-        <Text style={styles.artikelTitle}>Nama Artikel</Text>
-        <Text style={styles.artikelDesc}>Artikel ini adalah...</Text>
+const MoreButton = ({onPress}) => {
+  const style = {
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    elevation: 3,
+  };
+  return (
+    <TouchableNativeFeedback onPress={onPress}>
+      <View style={style}>
+        <Icon name="md-arrow-forward" size={20} />
       </View>
-    </View>
+    </TouchableNativeFeedback>
   );
+};
 
-  const informasiPilihanSeparator = [
+const RelatedItem = () => (
+  <View style={styles.relatedCard}>
+    <View style={styles.relatedImg} />
+    <Text style={styles.relatedCaption} numberOfLines={1}>
+      Test Hehehehe ahahahaw whadhawhdahw hawhdawh
+    </Text>
+  </View>
+);
+
+const ArticleItem = () => (
+  <View style={styles.artikel}>
+    <View style={styles.artikelImage} />
+    <View style={styles.artikelContent}>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Icon name="ios-book" size={18} color={Colors.secondary} />
+        <Text style={[styles.artikelTitle, {marginLeft: 8}]}>Nama Artikel</Text>
+      </View>
+      <Text style={styles.artikelDesc}>Artikel ini adalah...</Text>
+    </View>
+  </View>
+);
+
+const Beranda = () => {
+  const relatedSeparator = [
     styles.separatorBar,
     {backgroundColor: '#fff', marginBottom: 0},
   ];
@@ -42,35 +69,46 @@ const Beranda = () => {
       <StatusBar barStyle="light-content" backgroundColor={Colors.secondary} />
       <View style={styles.header}>
         <View style={styles.headerContent}>
-          <Text style={styles.greetingText}>Halo, Khairul!</Text>
+          <View style={styles.sectionRow}>
+            <Text style={styles.greetingText}>Halo, Khairul!</Text>
+            <Icon name="md-list" color="#fff" size={20} />
+          </View>
           <View style={styles.search}>
             <Text style={styles.searchText}>Mau cari apa?</Text>
           </View>
 
-          <Text style={styles.informasiPilihanTitle}>Informasi Pilihan</Text>
-          <View style={informasiPilihanSeparator} />
+          <Text style={styles.relatedTitle}>Informasi Pilihan</Text>
+          <View style={relatedSeparator} />
         </View>
 
         <FlatList
-          data={informasiPilihan}
+          data={related}
           horizontal
-          style={styles.informasiPilihan}
-          contentContainerStyle={styles.informasiPilihanContainer}
-          renderItem={renderInformasiPilihan}
+          style={styles.related}
+          contentContainerStyle={styles.relatedContainer}
           keyExtractor={(item, index) => index.toString()}
           showsHorizontalScrollIndicator={false}
+          renderItem={({index, item}) => <RelatedItem />}
+          snapToInterval={screen.width * 0.8 - 16}
+          snapToAlignment="center"
+          decelerationRate="fast"
+          scrollEventThrottle={32}
+          pagingEnabled
         />
       </View>
 
       <View style={styles.mainContent}>
-        <Text style={styles.sectionTitle}>Artikel Untukmu</Text>
-        <View style={styles.separatorBar} />
-
-        {artikel.map(renderArticles)}
-
-        <View style={styles.moreArticleButton}>
-          <Text style={styles.moreArticleButtonText}>> Lihat lainnya..</Text>
+        <View style={styles.sectionRow}>
+          <View>
+            <Text style={styles.sectionTitle}>Konten Nifas</Text>
+            <View style={styles.separatorBar} />
+          </View>
+          <MoreButton onPress={() => {}} />
         </View>
+
+        {artikel.map((item, index) => (
+          <ArticleItem key={index} />
+        ))}
       </View>
     </ScrollView>
   );
@@ -85,11 +123,11 @@ const styles = StyleSheet.create({
   },
   headerContent: {
     padding: 16,
+    paddingTop: 32,
   },
   greetingText: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginTop: 18,
     color: Colors.textAlt,
   },
   search: {
@@ -104,32 +142,45 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.text,
   },
-  informasiPilihanTitle: {
+  relatedTitle: {
     fontSize: 16,
     fontWeight: 'bold',
     color: Colors.textAlt,
     marginTop: 24,
   },
-  informasiPilihan: {
+  related: {
     marginTop: -16,
-    marginBottom: -64,
+    marginBottom: -96,
   },
-  informasiPilihanContainer: {
+  relatedContainer: {
     paddingHorizontal: 8,
   },
-  informasiPilihanCard: {
+  relatedCard: {
     backgroundColor: Colors.background,
     elevation: 5,
-    width: (isLandscape ? screen.height : screen.width) - 32,
-    height: 180,
+    width: (isLandscape ? screen.height : screen.width * 0.8) - 32,
     margin: 16,
     marginHorizontal: 8,
     borderRadius: 5,
+    overflow: 'hidden',
+  },
+  relatedImg: {
+    height: 150,
+    backgroundColor: Colors.grey,
+  },
+  relatedCaption: {
+    fontSize: 14,
+    margin: 12,
   },
   mainContent: {
-    marginTop: 40,
+    marginTop: 80,
     padding: 16,
-    paddingBottom: 0,
+    paddingBottom: 8,
+  },
+  sectionRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   sectionTitle: {
     fontSize: 16,
@@ -148,7 +199,7 @@ const styles = StyleSheet.create({
   artikel: {
     backgroundColor: Colors.background,
     borderRadius: 5,
-    elevation: 5,
+    elevation: 3,
     marginBottom: 16,
     overflow: 'hidden',
     flexDirection: 'row',
@@ -172,21 +223,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: Colors.grey,
     marginTop: 6,
-  },
-  moreArticleButton: {
-    padding: 16,
-    paddingBottom: 24,
-    paddingHorizontal: 16,
-    borderColor: '#ddd',
-    borderTopWidth: 1,
-    marginTop: 12,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  moreArticleButtonText: {
-    color: Colors.primary,
-    fontSize: 16,
-    fontWeight: 'bold',
   },
 });
 
