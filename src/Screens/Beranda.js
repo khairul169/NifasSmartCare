@@ -11,30 +11,12 @@ import {
 } from 'react-native';
 import Colors from '../Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {CircleButton} from '../Components/Button';
 
 const screen = Dimensions.get('screen');
 const isLandscape = screen.width > screen.height;
 const related = [1, 2, 3];
 const artikel = [1, 2, 3];
-
-const MoreButton = ({onPress}) => {
-  const style = {
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    elevation: 3,
-  };
-  return (
-    <TouchableNativeFeedback onPress={onPress}>
-      <View style={style}>
-        <Icon name="md-arrow-forward" size={20} />
-      </View>
-    </TouchableNativeFeedback>
-  );
-};
 
 const RelatedItem = ({item, navigate}) => (
   <TouchableNativeFeedback onPress={() => navigate('LihatArtikel')}>
@@ -53,12 +35,16 @@ const ArticleItem = ({item, navigate}) => (
       <View style={styles.artikelImage} />
       <View style={styles.artikelContent}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Icon name="ios-book" size={18} color={Colors.secondary} />
-          <Text style={[styles.artikelTitle, {marginLeft: 8}]}>
+          <Icon name="ios-book" size={16} color={Colors.secondary} />
+          <Text
+            style={[styles.artikelTitle, {marginLeft: 8}]}
+            numberOfLines={1}>
             Nama Artikel
           </Text>
         </View>
-        <Text style={styles.artikelDesc}>Artikel ini adalah...</Text>
+        <Text style={styles.artikelDesc} numberOfLines={3}>
+          Artikel ini adalah...
+        </Text>
       </View>
     </View>
   </TouchableNativeFeedback>
@@ -111,7 +97,9 @@ const Beranda = props => {
             <Text style={styles.sectionTitle}>Konten Nifas</Text>
             <View style={styles.separatorBar} />
           </View>
-          <MoreButton onPress={() => {}} />
+          <CircleButton onPress={() => {}}>
+            <Icon name="md-arrow-forward" size={20} />
+          </CircleButton>
         </View>
 
         {artikel.map((item, index) => (
@@ -228,7 +216,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   artikelTitle: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
     color: Colors.text,
   },
