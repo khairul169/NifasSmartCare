@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text, StyleSheet, ScrollView, StatusBar} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, StyleSheet, StatusBar, Animated} from 'react-native';
 import {CircleButton, RoundedButton} from '../Components/Button';
 import Colors from '../Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -11,81 +11,141 @@ const ContentImage = ({height = 100}, source) => {
 };
 
 const LihatArtikel = props => {
+  const [scrollY] = useState(new Animated.Value(0));
+  const headerStyle = [
+    styles.header,
+    {
+      backgroundColor: scrollY.interpolate({
+        inputRange: [260, 280],
+        outputRange: ['rgba(149, 117, 205, 0.0)', 'rgba(149, 117, 205, 1.0)'],
+        extrapolate: 'clamp',
+      }),
+    },
+  ];
+  const backBtnStyle = {
+    backgroundColor: 'transparent',
+    elevation: 0,
+  };
+  const headerTitleStyle = [
+    styles.headerTitle,
+    {
+      opacity: scrollY.interpolate({
+        inputRange: [260, 280],
+        outputRange: [0.0, 1.0],
+        extrapolate: 'clamp',
+      }),
+    },
+  ];
+
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <StatusBar
         translucent
         backgroundColor="transparent"
         barStyle="light-content"
       />
-      <View style={styles.header}>
+      <Animated.View style={headerStyle}>
         <CircleButton
           onPress={() => props.navigation.goBack()}
-          style={styles.backButton}
-          size={40}>
-          <Icon name="md-arrow-back" size={20} />
+          size={36}
+          style={backBtnStyle}
+          animated>
+          <Icon name="md-arrow-back" size={20} color="#fff" />
         </CircleButton>
-        <View style={styles.headerImage} />
-      </View>
+        <Animated.Text style={headerTitleStyle} numberOfLines={1}>
+          Nama Artikel
+        </Animated.Text>
+      </Animated.View>
 
-      <Text style={styles.title}>Nama Artikel</Text>
-      <View style={styles.infoSection}>
-        <Icon name="md-time" size={16} color={Colors.secondary} />
-        <Text style={styles.infoSectionText}>8 menit baca</Text>
-        <Icon
-          name="md-thumbs-up"
-          size={16}
-          color={Colors.secondary}
-          style={{marginLeft: 12}}
-        />
-        <Text style={styles.infoSectionText}>422</Text>
-      </View>
-      <View style={styles.actionButtonGroup}>
-        <RoundedButton onPress={() => {}} style={styles.actionButton} size={40}>
-          <Icon name="md-thumbs-up" size={20} color={Colors.primary} />
-        </RoundedButton>
-        <RoundedButton onPress={() => {}} style={styles.actionButton} size={40}>
-          <Icon name="md-star-outline" size={20} color={Colors.primary} />
-        </RoundedButton>
-        <RoundedButton onPress={() => {}} style={styles.actionButton} size={40}>
-          <Icon name="md-share-alt" size={20} color={Colors.primary} />
-        </RoundedButton>
-      </View>
+      <Animated.ScrollView
+        style={styles.container}
+        scrollEventThrottle={16}
+        onScroll={Animated.event([
+          {nativeEvent: {contentOffset: {y: scrollY}}},
+        ])}>
+        <View style={styles.cover} />
 
-      <View style={styles.separatorLine} />
-      <View style={styles.content}>
-        <Text style={styles.contentText}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </Text>
-        <Lists
-          style={styles.contentLists}
-          caption="Berikut daftar blahblah:"
-          items={[
-            'hahasdsdasdsadasdsasadsada awewaeaw sdasawea awa',
-            'hehe',
-            'wew',
-          ]}
-        />
+        <Text style={styles.title}>Nama Artikel</Text>
+        <View style={styles.infoSection}>
+          <Icon name="md-time" size={16} color={Colors.secondary} />
+          <Text style={styles.infoSectionText}>8 menit baca</Text>
+          <Icon
+            name="md-thumbs-up"
+            size={16}
+            color={Colors.secondary}
+            style={{marginLeft: 12}}
+          />
+          <Text style={styles.infoSectionText}>422</Text>
+        </View>
+        <View style={styles.actionButtonGroup}>
+          <RoundedButton
+            onPress={() => {}}
+            style={styles.actionButton}
+            size={40}>
+            <Icon name="md-thumbs-up" size={20} color={Colors.primary} />
+          </RoundedButton>
+          <RoundedButton
+            onPress={() => {}}
+            style={styles.actionButton}
+            size={40}>
+            <Icon name="md-star-outline" size={20} color={Colors.primary} />
+          </RoundedButton>
+          <RoundedButton
+            onPress={() => {}}
+            style={styles.actionButton}
+            size={40}>
+            <Icon name="md-share-alt" size={20} color={Colors.primary} />
+          </RoundedButton>
+        </View>
 
-        <ContentImage height={200} />
+        <View style={styles.content}>
+          <View style={styles.separatorLine} />
 
-        <Text style={styles.contentText}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </Text>
-      </View>
-    </ScrollView>
+          <Text style={styles.contentText}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </Text>
+          <Lists
+            style={styles.contentLists}
+            caption="Berikut daftar blahblah:"
+            items={[
+              'hahasdsdasdsadasdsasadsada awewaeaw sdasawea awa',
+              'hehe',
+              'wew',
+            ]}
+          />
+
+          <ContentImage height={200} />
+
+          <Text style={styles.contentText}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </Text>
+
+          <View style={styles.separatorLine} />
+
+          <Text style={styles.contentText}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </Text>
+        </View>
+      </Animated.ScrollView>
+    </View>
   );
 };
 
@@ -94,22 +154,31 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
+    position: 'absolute',
+    padding: 16,
+    paddingBottom: 12,
+    paddingTop: StatusBar.currentHeight + 8,
+    top: 0,
+    left: 0,
+    flexDirection: 'row',
+    zIndex: 1,
+    alignItems: 'center',
     backgroundColor: Colors.secondary,
+  },
+  headerTitle: {
+    fontSize: 20,
+    color: Colors.textAlt,
+    flex: 1,
+    marginLeft: 24,
+  },
+  cover: {
+    backgroundColor: Colors.primary,
+    height: 300,
     borderBottomEndRadius: 24,
     borderBottomStartRadius: 24,
     elevation: 3,
     overflow: 'hidden',
     position: 'relative',
-  },
-  backButton: {
-    position: 'absolute',
-    top: StatusBar.currentHeight + 16,
-    left: 16,
-    zIndex: 1,
-  },
-  headerImage: {
-    height: 300,
-    backgroundColor: Colors.secondary,
   },
   title: {
     fontSize: 20,
@@ -142,8 +211,7 @@ const styles = StyleSheet.create({
   separatorLine: {
     backgroundColor: Colors.secondary,
     height: 1,
-    marginTop: 16,
-    marginHorizontal: 24,
+    marginBottom: 16,
   },
   content: {
     padding: 24,

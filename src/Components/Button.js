@@ -1,8 +1,14 @@
 import React from 'react';
-import {View, TouchableNativeFeedback} from 'react-native';
+import {View, TouchableNativeFeedback, Animated} from 'react-native';
 import Colors from '../Colors';
 
-export const CircleButton = ({onPress, children, size = 32, style}) => {
+export const CircleButton = ({
+  onPress,
+  children,
+  size = 32,
+  style,
+  animated,
+}) => {
   const btnStyle = [
     {
       backgroundColor: '#fff',
@@ -15,9 +21,10 @@ export const CircleButton = ({onPress, children, size = 32, style}) => {
     },
     style,
   ];
+  const Container = animated ? Animated.View : View;
   return (
     <TouchableNativeFeedback onPress={onPress}>
-      <View style={btnStyle}>{children}</View>
+      <Container style={btnStyle}>{children}</Container>
     </TouchableNativeFeedback>
   );
 };
