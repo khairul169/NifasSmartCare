@@ -7,8 +7,12 @@ import {
   FlatList,
   Dimensions,
   StatusBar,
-  TouchableNativeFeedback,
+  TouchableOpacity,
 } from 'react-native';
+import {
+  TouchableOpacity as RNGHTouchable,
+  FlatList as RNGHFlatList,
+} from 'react-native-gesture-handler';
 import Colors from '../Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {CircleButton} from '../Components/Button';
@@ -19,19 +23,21 @@ const related = [1, 2, 3];
 const artikel = [1, 2, 3];
 
 const RelatedItem = ({item, navigate}) => (
-  <TouchableNativeFeedback onPress={() => navigate('LihatArtikel')}>
-    <View style={styles.relatedCard}>
+  <View style={styles.relatedCard}>
+    <RNGHTouchable onPress={() => navigate('LihatArtikel')}>
       <View style={styles.relatedImg} />
       <Text style={styles.relatedCaption} numberOfLines={1}>
         Test Hehehehe ahahahaw whadhawhdahw hawhdawh
       </Text>
-    </View>
-  </TouchableNativeFeedback>
+    </RNGHTouchable>
+  </View>
 );
 
 const ArticleItem = ({item, navigate}) => (
-  <TouchableNativeFeedback onPress={() => navigate('LihatArtikel')}>
-    <View style={styles.artikel}>
+  <View style={styles.artikel}>
+    <TouchableOpacity
+      style={styles.artikelRow}
+      onPress={() => navigate('LihatArtikel')}>
       <View style={styles.artikelImage} />
       <View style={styles.artikelContent}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -46,8 +52,8 @@ const ArticleItem = ({item, navigate}) => (
           Artikel ini adalah...
         </Text>
       </View>
-    </View>
-  </TouchableNativeFeedback>
+    </TouchableOpacity>
+  </View>
 );
 
 const Beranda = props => {
@@ -56,61 +62,73 @@ const Beranda = props => {
     {backgroundColor: '#fff', marginBottom: 0},
   ];
 
+  const statusBarStyle = {
+    backgroundColor: Colors.secondary,
+    height: StatusBar.currentHeight,
+  };
+
   return (
-    <ScrollView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor={Colors.secondary} />
-      <View style={styles.header}>
-        <View style={styles.headerContent}>
-          <View style={styles.sectionRow}>
-            <Text style={styles.greetingText}>Halo, Khairul!</Text>
-            <Icon name="md-list" color="#fff" size={20} />
+    <View style={styles.container}>
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle="light-content"
+      />
+      <View style={statusBarStyle} />
+
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <View style={styles.header}>
+          <View style={styles.headerContent}>
+            <View style={styles.sectionRow}>
+              <Text style={styles.greetingText}>Halo, Khairul!</Text>
+              <Icon name="md-list" color="#fff" size={20} />
+            </View>
+            <View style={styles.search}>
+              <Text style={styles.searchText}>Mau cari apa?</Text>
+            </View>
+
+            <Text style={styles.relatedTitle}>Informasi Pilihan</Text>
+            <View style={relatedSeparator} />
           </View>
-          <View style={styles.search}>
-            <Text style={styles.searchText}>Mau cari apa?</Text>
-          </View>
 
-          <Text style={styles.relatedTitle}>Informasi Pilihan</Text>
-          <View style={relatedSeparator} />
-        </View>
-
-        <FlatList
-          data={related}
-          horizontal
-          style={styles.related}
-          contentContainerStyle={styles.relatedContainer}
-          keyExtractor={(item, index) => index.toString()}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({index, item}) => (
-            <RelatedItem item={item} navigate={props.navigation.navigate} />
-          )}
-          snapToInterval={screen.width * 0.8 - 16}
-          snapToAlignment="center"
-          decelerationRate="fast"
-          scrollEventThrottle={32}
-          pagingEnabled
-        />
-      </View>
-
-      <View style={styles.mainContent}>
-        <View style={styles.sectionRow}>
-          <View>
-            <Text style={styles.sectionTitle}>Konten Nifas</Text>
-            <View style={styles.separatorBar} />
-          </View>
-          <CircleButton onPress={() => {}}>
-            <Icon name="md-arrow-forward" size={20} />
-          </CircleButton>
-        </View>
-
-        {artikel.map((item, index) => (
-          <ArticleItem
-            key={index}
-            item={item}
-            navigate={props.navigation.navigate}
+          <RNGHFlatList
+            data={related}
+            horizontal
+            style={styles.related}
+            contentContainerStyle={styles.relatedContainer}
+            keyExtractor={(item, index) => index.toString()}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({index, item}) => (
+              <RelatedItem item={item} navigate={props.navigation.navigate} />
+            )}
+            snapToInterval={screen.width * 0.8 - 16}
+            snapToAlignment="center"
+            decelerationRate="fast"
+            pagingEnabled
           />
-        ))}
-      </View>
-    </ScrollView>
+        </View>
+
+        <View style={styles.mainContent}>
+          <View style={styles.sectionRow}>
+            <View>
+              <Text style={styles.sectionTitle}>Konten Nifas</Text>
+              <View style={styles.separatorBar} />
+            </View>
+            <CircleButton onPress={() => {}}>
+              <Icon name="md-arrow-forward" size={20} />
+            </CircleButton>
+          </View>
+
+          {artikel.map((item, index) => (
+            <ArticleItem
+              key={index}
+              item={item}
+              navigate={props.navigation.navigate}
+            />
+          ))}
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -203,6 +221,8 @@ const styles = StyleSheet.create({
     elevation: 3,
     marginBottom: 16,
     overflow: 'hidden',
+  },
+  artikelRow: {
     flexDirection: 'row',
     height: isLandscape ? 140 : 100,
   },
