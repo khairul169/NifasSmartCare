@@ -16,13 +16,21 @@ const informasiPilihan = [1, 2, 3];
 const artikel = [1, 2, 3];
 
 const Beranda = () => {
-  const renderInformasiPilihan = ({index, item}) => {
-    return (
-      <View style={styles.informasiPilihanCard}>
-        <Text>{index}</Text>
+  const renderInformasiPilihan = ({index, item}) => (
+    <View style={styles.informasiPilihanCard}>
+      <Text>{index}</Text>
+    </View>
+  );
+
+  const renderArticles = (item, index) => (
+    <View key={index} style={styles.artikel}>
+      <View style={styles.artikelImage} />
+      <View style={styles.artikelContent}>
+        <Text style={styles.artikelTitle}>Nama Artikel</Text>
+        <Text style={styles.artikelDesc}>Artikel ini adalah...</Text>
       </View>
-    );
-  };
+    </View>
+  );
 
   const informasiPilihanSeparator = [
     styles.separatorBar,
@@ -58,15 +66,7 @@ const Beranda = () => {
         <Text style={styles.sectionTitle}>Artikel Untukmu</Text>
         <View style={styles.separatorBar} />
 
-        {artikel.map((item, index) => (
-          <View key={index} style={styles.artikel}>
-            <View style={styles.artikelImage} />
-            <View style={styles.artikelContent}>
-              <Text style={styles.artikelTitle}>Nama Artikel</Text>
-              <Text style={styles.artikelDesc}>Artikel ini adalah...</Text>
-            </View>
-          </View>
-        ))}
+        {artikel.map(renderArticles)}
 
         <View style={styles.moreArticleButton}>
           <Text style={styles.moreArticleButtonText}>> Lihat lainnya..</Text>
