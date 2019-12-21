@@ -1,12 +1,8 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import Beranda from './src/Screens/Beranda';
 
 const App = () => {
-  return (
-    <View>
-      <Text>Hello world!</Text>
-    </View>
-  );
+  return <Beranda />;
 };
 
 export default App;
