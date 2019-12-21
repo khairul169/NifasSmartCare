@@ -1,8 +1,8 @@
 import React from 'react';
-import Beranda from './src/Screens/Beranda';
+import Routes from './src/Routes';
 
 const App = () => {
-  return <Beranda />;
+  return <Routes />;
 };
 
 export default App;

@@ -36,29 +36,35 @@ const MoreButton = ({onPress}) => {
   );
 };
 
-const RelatedItem = () => (
-  <View style={styles.relatedCard}>
-    <View style={styles.relatedImg} />
-    <Text style={styles.relatedCaption} numberOfLines={1}>
-      Test Hehehehe ahahahaw whadhawhdahw hawhdawh
-    </Text>
-  </View>
-);
-
-const ArticleItem = () => (
-  <View style={styles.artikel}>
-    <View style={styles.artikelImage} />
-    <View style={styles.artikelContent}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Icon name="ios-book" size={18} color={Colors.secondary} />
-        <Text style={[styles.artikelTitle, {marginLeft: 8}]}>Nama Artikel</Text>
-      </View>
-      <Text style={styles.artikelDesc}>Artikel ini adalah...</Text>
+const RelatedItem = ({item, navigate}) => (
+  <TouchableNativeFeedback onPress={() => navigate('LihatArtikel')}>
+    <View style={styles.relatedCard}>
+      <View style={styles.relatedImg} />
+      <Text style={styles.relatedCaption} numberOfLines={1}>
+        Test Hehehehe ahahahaw whadhawhdahw hawhdawh
+      </Text>
     </View>
-  </View>
+  </TouchableNativeFeedback>
 );
 
-const Beranda = () => {
+const ArticleItem = ({item, navigate}) => (
+  <TouchableNativeFeedback onPress={() => navigate('LihatArtikel')}>
+    <View style={styles.artikel}>
+      <View style={styles.artikelImage} />
+      <View style={styles.artikelContent}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Icon name="ios-book" size={18} color={Colors.secondary} />
+          <Text style={[styles.artikelTitle, {marginLeft: 8}]}>
+            Nama Artikel
+          </Text>
+        </View>
+        <Text style={styles.artikelDesc}>Artikel ini adalah...</Text>
+      </View>
+    </View>
+  </TouchableNativeFeedback>
+);
+
+const Beranda = props => {
   const relatedSeparator = [
     styles.separatorBar,
     {backgroundColor: '#fff', marginBottom: 0},
@@ -88,7 +94,9 @@ const Beranda = () => {
           contentContainerStyle={styles.relatedContainer}
           keyExtractor={(item, index) => index.toString()}
           showsHorizontalScrollIndicator={false}
-          renderItem={({index, item}) => <RelatedItem />}
+          renderItem={({index, item}) => (
+            <RelatedItem item={item} navigate={props.navigation.navigate} />
+          )}
           snapToInterval={screen.width * 0.8 - 16}
           snapToAlignment="center"
           decelerationRate="fast"
@@ -107,7 +115,11 @@ const Beranda = () => {
         </View>
 
         {artikel.map((item, index) => (
-          <ArticleItem key={index} />
+          <ArticleItem
+            key={index}
+            item={item}
+            navigate={props.navigation.navigate}
+          />
         ))}
       </View>
     </ScrollView>
@@ -117,6 +129,7 @@ const Beranda = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.background,
   },
   header: {
     backgroundColor: Colors.secondary,
@@ -161,12 +174,12 @@ const styles = StyleSheet.create({
     width: (isLandscape ? screen.height : screen.width * 0.8) - 32,
     margin: 16,
     marginHorizontal: 8,
-    borderRadius: 5,
+    borderRadius: 8,
     overflow: 'hidden',
   },
   relatedImg: {
     height: 150,
-    backgroundColor: Colors.grey,
+    backgroundColor: '#eee',
   },
   relatedCaption: {
     fontSize: 14,
@@ -198,7 +211,7 @@ const styles = StyleSheet.create({
   },
   artikel: {
     backgroundColor: Colors.background,
-    borderRadius: 5,
+    borderRadius: 8,
     elevation: 3,
     marginBottom: 16,
     overflow: 'hidden',
