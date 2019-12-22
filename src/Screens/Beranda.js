@@ -4,10 +4,10 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  FlatList,
   Dimensions,
   StatusBar,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import {
   TouchableOpacity as RNGHTouchable,
@@ -16,18 +16,19 @@ import {
 import Colors from '../Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {CircleButton} from '../Components/Button';
+import {articleList} from '../Mock';
 
 const screen = Dimensions.get('screen');
 const isLandscape = screen.width > screen.height;
-const related = [1, 2, 3];
-const artikel = [1, 2, 3];
+const related = articleList;
+const artikel = articleList;
 
 const RelatedItem = ({item, navigate}) => (
   <View style={styles.relatedCard}>
-    <RNGHTouchable onPress={() => navigate('LihatArtikel')}>
-      <View style={styles.relatedImg} />
+    <RNGHTouchable onPress={() => navigate('LihatArtikel', {item})}>
+      <Image style={styles.relatedImg} source={item.image} />
       <Text style={styles.relatedCaption} numberOfLines={1}>
-        Test Hehehehe ahahahaw whadhawhdahw hawhdawh
+        {item.title}
       </Text>
     </RNGHTouchable>
   </View>
@@ -37,20 +38,25 @@ const ArticleItem = ({item, navigate}) => (
   <View style={styles.artikel}>
     <TouchableOpacity
       style={styles.artikelRow}
-      onPress={() => navigate('LihatArtikel')}>
-      <View style={styles.artikelImage} />
+      onPress={() => navigate('LihatArtikel', {item})}>
+      <Image style={styles.artikelImage} source={item.image} />
       <View style={styles.artikelContent}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Icon name="ios-book" size={16} color={Colors.secondary} />
-          <Text
-            style={[styles.artikelTitle, {marginLeft: 8}]}
-            numberOfLines={1}>
-            Nama Artikel
-          </Text>
+        <View style={{flexDirection: 'row', alignItems: 'flex-start'}}>
+          <View style={{flex: 1}}>
+            <Text style={styles.artikelTitle} numberOfLines={2}>
+              {item.title}
+            </Text>
+            <Text style={styles.artikelDesc} numberOfLines={3}>
+              {item.desc}
+            </Text>
+          </View>
+          <Icon
+            name="ios-book"
+            size={16}
+            color={Colors.secondary}
+            style={{marginTop: 2}}
+          />
         </View>
-        <Text style={styles.artikelDesc} numberOfLines={3}>
-          Artikel ini adalah...
-        </Text>
       </View>
     </TouchableOpacity>
   </View>
@@ -176,7 +182,7 @@ const styles = StyleSheet.create({
   },
   relatedCard: {
     backgroundColor: Colors.background,
-    elevation: 5,
+    elevation: 10,
     width: (isLandscape ? screen.height : screen.width * 0.8) - 32,
     margin: 16,
     marginHorizontal: 8,
@@ -184,6 +190,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   relatedImg: {
+    width: '100%',
     height: 150,
     backgroundColor: '#eee',
   },
@@ -218,7 +225,7 @@ const styles = StyleSheet.create({
   artikel: {
     backgroundColor: Colors.background,
     borderRadius: 8,
-    elevation: 3,
+    elevation: 10,
     marginBottom: 16,
     overflow: 'hidden',
   },
@@ -228,12 +235,15 @@ const styles = StyleSheet.create({
   },
   artikelImage: {
     flex: 2,
+    height: '100%',
     alignSelf: 'stretch',
     backgroundColor: Colors.secondary,
   },
   artikelContent: {
     flex: 3,
     padding: 16,
+    paddingVertical: 12,
+    justifyContent: 'center',
   },
   artikelTitle: {
     fontSize: 14,
@@ -242,6 +252,7 @@ const styles = StyleSheet.create({
   },
   artikelDesc: {
     fontSize: 12,
+    lineHeight: 16,
     color: Colors.grey,
     marginTop: 6,
   },

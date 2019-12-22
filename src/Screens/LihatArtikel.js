@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, StatusBar, Animated} from 'react-native';
+import {View, Text, StyleSheet, StatusBar, Animated, Image} from 'react-native';
 import {CircleButton, RoundedButton} from '../Components/Button';
 import Colors from '../Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -15,58 +15,51 @@ const CONTENT_SEPARATOR = 1;
 const CONTENT_IMAGE = 2;
 const CONTENT_LISTS = 3;
 
-const articleName = 'Perawatan Masa Nifas';
-const contents = [
-  [
-    CONTENT_TEXT,
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimad minim veniam, quis nostrud exercitation ullamco laboris nisi utaliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt inculpa qui officia deserunt mollit anim id est laborum.',
-  ],
-  [
-    CONTENT_LISTS,
-    'Berikut daftar blahblah:',
-    ['hahasdsdasdsadasdsasadsada awewaeaw sdasawea awa', 'hehe', 'wew'],
-    true,
-  ],
-  [CONTENT_IMAGE],
-  [
-    CONTENT_TEXT,
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimad minim veniam, quis nostrud exercitation ullamco laboris nisi utaliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt inculpa qui officia deserunt mollit anim id est laborum.',
-  ],
-  [CONTENT_SEPARATOR],
-  [
-    CONTENT_LISTS,
-    'Referensi:',
-    ['WHO. 2016. Dapat diakses pada: http://who.int/'],
-    false,
-  ],
-];
-
 const LihatArtikel = props => {
   const [scrollY] = useState(new Animated.Value(0));
   const headerStyle = [
     styles.header,
     {
       backgroundColor: scrollY.interpolate({
-        inputRange: [260, 280],
+        inputRange: [40, 280],
         outputRange: ['rgba(149, 117, 205, 0.0)', 'rgba(149, 117, 205, 1.0)'],
+        extrapolate: 'clamp',
+      }),
+      elevation: scrollY.interpolate({
+        inputRange: [40, 280],
+        outputRange: [0, 3],
+        extrapolate: 'clamp',
+      }),
+      height: scrollY.interpolate({
+        inputRange: [40, 280],
+        outputRange: [100, 72],
         extrapolate: 'clamp',
       }),
     },
   ];
   const backBtnStyle = {
-    backgroundColor: 'transparent',
-    elevation: 0,
+    backgroundColor: Colors.secondary,
+    elevation: scrollY.interpolate({
+      inputRange: [40, 280],
+      outputRange: [3, 0],
+      extrapolate: 'clamp',
+    }),
   };
   const headerTitleStyle = [
     styles.headerTitle,
     {
       opacity: scrollY.interpolate({
-        inputRange: [260, 280],
+        inputRange: [40, 280],
         outputRange: [0.0, 1.0],
         extrapolate: 'clamp',
       }),
     },
   ];
+
+  const articleItem = props.navigation.getParam('item');
+  const articleName = articleItem ? articleItem.title : '';
+  const contents = articleItem ? articleItem.content : [];
+  const coverImage = articleItem ? articleItem.image : null;
 
   return (
     <View style={styles.container}>
@@ -94,7 +87,9 @@ const LihatArtikel = props => {
         onScroll={Animated.event([
           {nativeEvent: {contentOffset: {y: scrollY}}},
         ])}>
-        <View style={styles.cover} />
+        <View style={styles.cover}>
+          <Image style={{width: '100%', height: '100%'}} source={coverImage} />
+        </View>
 
         <Text style={styles.title}>{articleName}</Text>
         <View style={styles.infoSection}>
@@ -170,27 +165,28 @@ const styles = StyleSheet.create({
   header: {
     position: 'absolute',
     padding: 16,
-    paddingBottom: 12,
     paddingTop: StatusBar.currentHeight + 8,
+    height: 100,
     top: 0,
     left: 0,
+    right: 0,
     flexDirection: 'row',
     zIndex: 1,
     alignItems: 'center',
     backgroundColor: Colors.secondary,
   },
   headerTitle: {
-    fontSize: 20,
+    fontSize: 18,
     color: Colors.textAlt,
     flex: 1,
-    marginLeft: 24,
+    marginHorizontal: 16,
   },
   cover: {
     backgroundColor: Colors.primary,
     height: 300,
     borderBottomEndRadius: 24,
     borderBottomStartRadius: 24,
-    elevation: 3,
+    elevation: 10,
     overflow: 'hidden',
     position: 'relative',
   },
