@@ -2,7 +2,7 @@ const CONTENT_TEXT = 0;
 const CONTENT_SEPARATOR = 1;
 const CONTENT_IMAGE = 2;
 const CONTENT_LISTS = 3;
-const CONTENT_VIDEO = 4;
+const CONTENT_YTVIDEO = 4;
 
 const articleList = [
   {
@@ -24,7 +24,7 @@ const articleList = [
         ],
         true,
       ],
-      [CONTENT_VIDEO, 'KVZ-P-ZI6W4'],
+      [CONTENT_YTVIDEO, 'KVZ-P-ZI6W4'],
       [CONTENT_SEPARATOR],
       [
         CONTENT_LISTS,

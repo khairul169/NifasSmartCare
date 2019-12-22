@@ -15,7 +15,7 @@ const CONTENT_TEXT = 0;
 const CONTENT_SEPARATOR = 1;
 const CONTENT_IMAGE = 2;
 const CONTENT_LISTS = 3;
-const CONTENT_VIDEO = 4;
+const CONTENT_YTVIDEO = 4;
 
 const LihatArtikel = props => {
   const [scrollY] = useState(new Animated.Value(0));
@@ -153,7 +153,7 @@ const LihatArtikel = props => {
                 />
               );
             }
-            if (item[0] === CONTENT_VIDEO) {
+            if (item[0] === CONTENT_YTVIDEO) {
               return (
                 <YouTube
                   key={index}
