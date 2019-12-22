@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, StatusBar, Animated, Image} from 'react-native';
 import {CircleButton, RoundedButton} from '../Components/Button';
+import YouTube from 'react-native-youtube';
 import Colors from '../Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Lists from '../Components/Lists';
@@ -14,6 +15,7 @@ const CONTENT_TEXT = 0;
 const CONTENT_SEPARATOR = 1;
 const CONTENT_IMAGE = 2;
 const CONTENT_LISTS = 3;
+const CONTENT_VIDEO = 4;
 
 const LihatArtikel = props => {
   const [scrollY] = useState(new Animated.Value(0));
@@ -148,6 +150,16 @@ const LihatArtikel = props => {
                   icon={item[3]}
                   caption={item[1]}
                   items={item[2]}
+                />
+              );
+            }
+            if (item[0] === CONTENT_VIDEO) {
+              return (
+                <YouTube
+                  key={index}
+                  apiKey="AIzaSyC2merDRztMxKg-QgVYaex2ls1vzkVjH60"
+                  videoId={item[1]}
+                  style={{alignSelf: 'stretch', height: 200, marginBottom: 24}}
                 />
               );
             }
