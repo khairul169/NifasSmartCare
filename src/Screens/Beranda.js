@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   },
   relatedCard: {
     backgroundColor: Colors.background,
-    elevation: 10,
+    elevation: 5,
     width: (isLandscape ? screen.height : screen.width * 0.8) - 32,
     margin: 16,
     marginHorizontal: 8,
@@ -224,8 +224,8 @@ const styles = StyleSheet.create({
   },
   artikel: {
     backgroundColor: Colors.background,
-    borderRadius: 8,
-    elevation: 10,
+    borderRadius: 5,
+    elevation: 3,
     marginBottom: 16,
     overflow: 'hidden',
   },
@@ -247,12 +247,13 @@ const styles = StyleSheet.create({
   },
   artikelTitle: {
     fontSize: 14,
+    lineHeight: 20,
     fontWeight: 'bold',
     color: Colors.text,
   },
   artikelDesc: {
     fontSize: 12,
-    lineHeight: 16,
+    lineHeight: 14,
     color: Colors.grey,
     marginTop: 6,
   },
