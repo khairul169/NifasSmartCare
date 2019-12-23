@@ -23,18 +23,18 @@ const LihatArtikel = props => {
     styles.header,
     {
       backgroundColor: scrollY.interpolate({
-        inputRange: [40, 200],
+        inputRange: [40, 280],
         outputRange: ['rgba(149, 117, 205, 0.0)', 'rgba(149, 117, 205, 1.0)'],
         extrapolate: 'clamp',
       }),
       elevation: scrollY.interpolate({
-        inputRange: [40, 200],
+        inputRange: [40, 280],
         outputRange: [0, 3],
         extrapolate: 'clamp',
       }),
       height: scrollY.interpolate({
-        inputRange: [40, 200],
-        outputRange: [100, 60],
+        inputRange: [40, 280],
+        outputRange: [100, 72],
         extrapolate: 'clamp',
       }),
     },
@@ -42,7 +42,7 @@ const LihatArtikel = props => {
   const backBtnStyle = {
     backgroundColor: Colors.secondary,
     elevation: scrollY.interpolate({
-      inputRange: [40, 200],
+      inputRange: [40, 280],
       outputRange: [3, 0],
       extrapolate: 'clamp',
     }),
@@ -51,7 +51,7 @@ const LihatArtikel = props => {
     styles.headerTitle,
     {
       opacity: scrollY.interpolate({
-        inputRange: [40, 200],
+        inputRange: [40, 280],
         outputRange: [0.0, 1.0],
         extrapolate: 'clamp',
       }),
@@ -65,7 +65,11 @@ const LihatArtikel = props => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={Colors.secondary} barStyle="light-content" />
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle="light-content"
+      />
       <Animated.View style={headerStyle}>
         <CircleButton
           onPress={() => props.navigation.goBack()}
@@ -173,6 +177,7 @@ const styles = StyleSheet.create({
   header: {
     position: 'absolute',
     padding: 16,
+    paddingTop: StatusBar.currentHeight + 8,
     height: 100,
     top: 0,
     left: 0,
