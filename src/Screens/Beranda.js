@@ -68,19 +68,9 @@ const Beranda = props => {
     {backgroundColor: '#fff', marginBottom: 0},
   ];
 
-  const statusBarStyle = {
-    backgroundColor: Colors.secondary,
-    height: StatusBar.currentHeight,
-  };
-
   return (
     <View style={styles.container}>
-      <StatusBar
-        translucent
-        backgroundColor="transparent"
-        barStyle="light-content"
-      />
-      <View style={statusBarStyle} />
+      <StatusBar backgroundColor={Colors.secondary} barStyle="light-content" />
 
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
