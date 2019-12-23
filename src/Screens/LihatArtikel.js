@@ -159,7 +159,7 @@ const LihatArtikel = props => {
                   key={index}
                   apiKey="AIzaSyC2merDRztMxKg-QgVYaex2ls1vzkVjH60"
                   videoId={item[1]}
-                  style={{alignSelf: 'stretch', height: 200, marginBottom: 24}}
+                  style={{alignSelf: 'stretch', height: 300, marginBottom: 24}}
                 />
               );
             }

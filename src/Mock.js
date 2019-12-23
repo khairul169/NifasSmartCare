@@ -24,7 +24,7 @@ const articleList = [
         ],
         true,
       ],
-      [CONTENT_YTVIDEO, 'KVZ-P-ZI6W4'],
+      [CONTENT_YTVIDEO, '16u4P4xm8io'],
       [CONTENT_SEPARATOR],
       [
         CONTENT_LISTS,
