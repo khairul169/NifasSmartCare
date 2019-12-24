@@ -1,4 +1,4 @@
-package com.nifassmartcare;
+package id.my.khairul.nifascare;
 
 import android.app.Application;
 import android.content.Context;

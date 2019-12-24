@@ -1,4 +1,4 @@
-package com.nifassmartcare;
+package id.my.khairul.nifascare;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
