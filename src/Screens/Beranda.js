@@ -13,8 +13,8 @@ import {
   TouchableOpacity as RNGHTouchable,
   FlatList as RNGHFlatList,
 } from 'react-native-gesture-handler';
-import Colors from '../Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {Colors} from '../Consts';
 import {CircleButton} from '../Components/Button';
 import {articleList} from '../Mock';
 

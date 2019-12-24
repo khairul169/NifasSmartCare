@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, TouchableNativeFeedback, Animated} from 'react-native';
-import Colors from '../Colors';
+import {Colors} from '../Consts';
 
 export const CircleButton = ({
   onPress,

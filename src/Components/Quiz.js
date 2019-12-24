@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import Colors from '../Colors';
+import {Colors} from '../Consts';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const QuizItem = ({label, wrong, right, reason, onPress}) => {

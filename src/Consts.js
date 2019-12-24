@@ -1,4 +1,4 @@
-const colors = {
+const Colors = {
   primary: '#5E35B1',
   secondary: '#9575CD',
   baseBackground: '#f8f8f8',
@@ -9,4 +9,13 @@ const colors = {
   grey: '#484848',
 };
 
-export default colors;
+const Content = {
+  TEXT: 0,
+  SEPARATOR: 1,
+  IMAGE: 2,
+  LISTS: 3,
+  YTVIDEO: 4,
+  QUIZ: 5,
+};
+
+export {Colors, Content};

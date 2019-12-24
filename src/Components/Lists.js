@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Colors from '../Colors';
+import {Colors} from '../Consts';
 
 const List = ({item}) => (
   <View style={styles.item}>

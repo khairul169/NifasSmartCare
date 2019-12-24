@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, StatusBar, Animated, Image} from 'react-native';
 import {CircleButton, RoundedButton} from '../Components/Button';
-import YouTube from 'react-native-youtube';
-import Colors from '../Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
+import YouTube from 'react-native-youtube';
+import {Colors, Content} from '../Consts';
 import Lists from '../Components/Lists';
 import Quiz from '../Components/Quiz';
 
@@ -11,13 +11,6 @@ const ContentImage = ({height = 100}, source) => {
   const style = [styles.contentImage, {height}];
   return <View style={style} />;
 };
-
-const CONTENT_TEXT = 0;
-const CONTENT_SEPARATOR = 1;
-const CONTENT_IMAGE = 2;
-const CONTENT_LISTS = 3;
-const CONTENT_YTVIDEO = 4;
-const CONTENT_QUIZ = 5;
 
 const LihatArtikel = props => {
   const [scrollY] = useState(new Animated.Value(0));
@@ -131,20 +124,20 @@ const LihatArtikel = props => {
         <View style={styles.content}>
           <View style={styles.separatorLine} />
           {contents.map((item, index) => {
-            if (item[0] === CONTENT_SEPARATOR) {
+            if (item[0] === Content.SEPARATOR) {
               return <View key={index} style={styles.separatorLine} />;
             }
-            if (item[0] === CONTENT_TEXT) {
+            if (item[0] === Content.TEXT) {
               return (
                 <Text key={index} style={styles.contentText}>
                   {item[1]}
                 </Text>
               );
             }
-            if (item[0] === CONTENT_IMAGE) {
+            if (item[0] === Content.IMAGE) {
               return <ContentImage key={index} height={200} />;
             }
-            if (item[0] === CONTENT_LISTS) {
+            if (item[0] === Content.LISTS) {
               return (
                 <Lists
                   key={index}
@@ -155,7 +148,7 @@ const LihatArtikel = props => {
                 />
               );
             }
-            if (item[0] === CONTENT_YTVIDEO) {
+            if (item[0] === Content.YTVIDEO) {
               return (
                 <YouTube
                   key={index}
@@ -165,7 +158,7 @@ const LihatArtikel = props => {
                 />
               );
             }
-            if (item[0] === CONTENT_QUIZ) {
+            if (item[0] === Content.QUIZ) {
               return <Quiz key={index} question={item[1]} answers={item[2]} />;
             }
           })}

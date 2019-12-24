@@ -1,9 +1,4 @@
-const CONTENT_TEXT = 0;
-const CONTENT_SEPARATOR = 1;
-const CONTENT_IMAGE = 2;
-const CONTENT_LISTS = 3;
-const CONTENT_YTVIDEO = 4;
-const CONTENT_QUIZ = 5;
+import {Content} from './Consts';
 
 const articleList = [
   {
@@ -13,11 +8,11 @@ const articleList = [
       'ibu nifas perlu untuk melakukan mobilisasi dini agar dapat mempertahankan fungsi mobilitas fisik ibu nifas.',
     content: [
       [
-        CONTENT_TEXT,
+        Content.TEXT,
         'Pada masa nifas, ibu nifas perlu untuk melakukan mobilisasi dini agar dapat mempertahankan fungsi mobilitas fisik ibu nifas. Latihan bergerak juga dapat memperlancar peredaran darah, merangsang fungsi saluran cerna, dan mengatasi masalah nyeri.',
       ],
       [
-        CONTENT_LISTS,
+        Content.LISTS,
         'Cara melakukan mobilisasi dini:',
         [
           'Bergerak sesegera mungkin dilakukan 2 jam setelah melahirkan dengan cara miring kiri-kanan atau bangun dari tempat tidur.',
@@ -25,10 +20,10 @@ const articleList = [
         ],
         true,
       ],
-      [CONTENT_YTVIDEO, '16u4P4xm8io'],
-      [CONTENT_SEPARATOR],
+      [Content.YTVIDEO, '16u4P4xm8io'],
+      [Content.SEPARATOR],
       [
-        CONTENT_LISTS,
+        Content.LISTS,
         'Referensi:',
         ['WHO. 2016. Dapat diakses pada: http://who.int/'],
         false,
@@ -42,11 +37,11 @@ const articleList = [
       'Kebersihan diri penting bagi ibu nifas. Saat menjalani masa nifas, ibu nifas perlu untuk menjaga kebersihkan dirinya agar terhindar dari ketidaknyamanan dan mencegah terjadinya komplikasi.',
     content: [
       [
-        CONTENT_TEXT,
+        Content.TEXT,
         'Saat menjalani masa nifas, ibu nifas perlu untuk menjaga kebersihkan dirinya. Setelah persalinan, ibu akan mengeluarkan keringat dan cairan lebih banyak daripada biasanya. Ibu juga perlu menjaga kebersihan untuk mencegah terjadinya ketidaknyamanan dan komplikasi infeksi.',
       ],
       [
-        CONTENT_LISTS,
+        Content.LISTS,
         'Cara perawatan:',
         [
           'Usahakan untuk sering mandi (3x sehari atau lebih).',
@@ -56,7 +51,7 @@ const articleList = [
         true,
       ],
       [
-        CONTENT_QUIZ,
+        Content.QUIZ,
         'Apa yang dimaksud dengan masa nifas?',
         [
           'Hehe haha lelel',
@@ -68,9 +63,9 @@ const articleList = [
           'Hehe haha lelel',
         ],
       ],
-      [CONTENT_SEPARATOR],
+      [Content.SEPARATOR],
       [
-        CONTENT_LISTS,
+        Content.LISTS,
         'Referensi:',
         ['WHO. 2016. Dapat diakses pada: http://who.int/'],
         false,
