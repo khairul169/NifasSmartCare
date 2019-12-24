@@ -3,6 +3,7 @@ const CONTENT_SEPARATOR = 1;
 const CONTENT_IMAGE = 2;
 const CONTENT_LISTS = 3;
 const CONTENT_YTVIDEO = 4;
+const CONTENT_QUIZ = 5;
 
 const articleList = [
   {
@@ -53,6 +54,19 @@ const articleList = [
           'Menjaga kebersihan tubuh.',
         ],
         true,
+      ],
+      [
+        CONTENT_QUIZ,
+        'Apa yang dimaksud dengan masa nifas?',
+        [
+          'Hehe haha lelel',
+          {
+            label: 'Hehe haha lelel',
+            reason: 'Lolololol',
+          },
+          'Hehe haha lelel',
+          'Hehe haha lelel',
+        ],
       ],
       [CONTENT_SEPARATOR],
       [

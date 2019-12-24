@@ -5,6 +5,7 @@ import YouTube from 'react-native-youtube';
 import Colors from '../Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Lists from '../Components/Lists';
+import Quiz from '../Components/Quiz';
 
 const ContentImage = ({height = 100}, source) => {
   const style = [styles.contentImage, {height}];
@@ -16,6 +17,7 @@ const CONTENT_SEPARATOR = 1;
 const CONTENT_IMAGE = 2;
 const CONTENT_LISTS = 3;
 const CONTENT_YTVIDEO = 4;
+const CONTENT_QUIZ = 5;
 
 const LihatArtikel = props => {
   const [scrollY] = useState(new Animated.Value(0));
@@ -162,6 +164,9 @@ const LihatArtikel = props => {
                   style={{alignSelf: 'stretch', height: 300, marginBottom: 24}}
                 />
               );
+            }
+            if (item[0] === CONTENT_QUIZ) {
+              return <Quiz key={index} question={item[1]} answers={item[2]} />;
             }
           })}
         </View>
