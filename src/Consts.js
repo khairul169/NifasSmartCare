@@ -1,3 +1,8 @@
+import {Dimensions} from 'react-native';
+
+const Window = Dimensions.get('window');
+Window.isLandscape = Window.width > Window.height;
+
 const Colors = {
   primary: '#5E35B1',
   secondary: '#9575CD',
@@ -18,4 +23,4 @@ const Content = {
   QUIZ: 5,
 };
 
-export {Colors, Content};
+export {Window, Colors, Content};

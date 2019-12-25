@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  Dimensions,
   StatusBar,
   TouchableOpacity,
   Image,
@@ -14,13 +13,11 @@ import {
   FlatList as RNGHFlatList,
 } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Colors} from '../Consts';
+import {Window, Colors} from '../Consts';
 import {CircleButton} from '../Components/Button';
 import {articleList} from '../Mock';
 
-const screen = Dimensions.get('screen');
-const isLandscape = screen.width > screen.height;
-const related = articleList;
+const related = [...articleList].sort((a, b) => 0.5 - Math.random());
 const artikel = articleList;
 
 const RelatedItem = ({item, navigate}) => (
@@ -107,7 +104,7 @@ const Beranda = props => {
             renderItem={({index, item}) => (
               <RelatedItem item={item} navigate={props.navigation.navigate} />
             )}
-            snapToInterval={screen.width * 0.8 - 16}
+            snapToInterval={Window.width * 0.8 - 16}
             snapToAlignment="center"
             decelerationRate="fast"
             pagingEnabled
@@ -183,7 +180,7 @@ const styles = StyleSheet.create({
   relatedCard: {
     backgroundColor: Colors.background,
     elevation: 5,
-    width: (isLandscape ? screen.height : screen.width * 0.8) - 32,
+    width: (Window.isLandscape ? Window.height : Window.width * 0.8) - 32,
     margin: 16,
     marginHorizontal: 8,
     borderRadius: 8,
@@ -191,7 +188,7 @@ const styles = StyleSheet.create({
   },
   relatedImg: {
     width: '100%',
-    height: 150,
+    height: Window.isLandscape ? Window.width * 0.24 : Window.height * 0.22,
     backgroundColor: '#eee',
   },
   relatedCaption: {
@@ -231,7 +228,7 @@ const styles = StyleSheet.create({
   },
   artikelRow: {
     flexDirection: 'row',
-    height: isLandscape ? 140 : 100,
+    height: Window.isLandscape ? Window.width * 0.2 : Window.height * 0.15,
   },
   artikelImage: {
     flex: 2,

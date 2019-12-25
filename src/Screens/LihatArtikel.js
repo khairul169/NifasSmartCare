@@ -3,13 +3,19 @@ import {View, Text, StyleSheet, StatusBar, Animated, Image} from 'react-native';
 import {CircleButton, RoundedButton} from '../Components/Button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import YouTube from 'react-native-youtube';
-import {Colors, Content} from '../Consts';
+import {Window, Colors, Content} from '../Consts';
 import Lists from '../Components/Lists';
 import Quiz from '../Components/Quiz';
 
-const ContentImage = ({height = 100}, source) => {
-  const style = [styles.contentImage, {height}];
-  return <View style={style} />;
+const ContentImage = ({source, width = Window.width, height = 100}) => {
+  const style = [
+    styles.contentImage,
+    {
+      width: '100%',
+      height: (Window.width * height) / width,
+    },
+  ];
+  return <Image style={style} source={source} />;
 };
 
 const LihatArtikel = props => {
@@ -57,6 +63,7 @@ const LihatArtikel = props => {
   const articleName = articleItem ? articleItem.title : '';
   const contents = articleItem ? articleItem.content : [];
   const coverImage = articleItem ? articleItem.image : null;
+  const articleTime = articleItem ? articleItem.time : 0;
 
   return (
     <View style={styles.container}>
@@ -91,14 +98,14 @@ const LihatArtikel = props => {
         <Text style={styles.title}>{articleName}</Text>
         <View style={styles.infoSection}>
           <Icon name="md-time" size={16} color={Colors.secondary} />
-          <Text style={styles.infoSectionText}>8 menit baca</Text>
-          <Icon
+          <Text style={styles.infoSectionText}>{articleTime} menit baca</Text>
+          {/*<Icon
             name="md-thumbs-up"
             size={16}
             color={Colors.secondary}
             style={{marginLeft: 12}}
           />
-          <Text style={styles.infoSectionText}>422</Text>
+          <Text style={styles.infoSectionText}>422</Text>*/}
         </View>
         <View style={styles.actionButtonGroup}>
           <RoundedButton
@@ -135,7 +142,14 @@ const LihatArtikel = props => {
               );
             }
             if (item[0] === Content.IMAGE) {
-              return <ContentImage key={index} height={200} />;
+              return (
+                <ContentImage
+                  key={index}
+                  source={item[1]}
+                  width={item[2]}
+                  height={item[3]}
+                />
+              );
             }
             if (item[0] === Content.LISTS) {
               return (
@@ -244,7 +258,6 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   contentImage: {
-    resizeMode: 'contain',
     height: 100,
     backgroundColor: '#eee',
     borderRadius: 10,
