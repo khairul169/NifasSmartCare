@@ -202,7 +202,7 @@ const LihatArtikel = props => {
                   key={index}
                   apiKey="AIzaSyC2merDRztMxKg-QgVYaex2ls1vzkVjH60"
                   videoId={item[1]}
-                  style={{alignSelf: 'stretch', height: 300, marginBottom: 24}}
+                  style={styles.ytVideo}
                 />
               );
             }
@@ -299,6 +299,12 @@ const styles = StyleSheet.create({
   },
   contentLists: {
     marginBottom: 32,
+  },
+  ytVideo: {
+    alignSelf: 'stretch',
+    height: 300,
+    marginBottom: 24,
+    marginHorizontal: -24,
   },
 });
 
