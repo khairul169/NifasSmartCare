@@ -5,11 +5,11 @@ import {
   StyleSheet,
   ScrollView,
   StatusBar,
-  TouchableOpacity,
+  TouchableNativeFeedback,
   Image,
 } from 'react-native';
 import {
-  TouchableOpacity as RNGHTouchable,
+  TouchableNativeFeedback as RNGHTouchable,
   FlatList as RNGHFlatList,
 } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -21,21 +21,19 @@ const related = [...articleList].sort((a, b) => 0.5 - Math.random());
 const artikel = articleList;
 
 const RelatedItem = ({item, navigate}) => (
-  <View style={styles.relatedCard}>
-    <RNGHTouchable onPress={() => navigate('LihatArtikel', {item})}>
+  <RNGHTouchable onPress={() => navigate('LihatArtikel', {item})}>
+    <View style={styles.relatedCard}>
       <Image style={styles.relatedImg} source={item.image} />
       <Text style={styles.relatedCaption} numberOfLines={1}>
         {item.title}
       </Text>
-    </RNGHTouchable>
-  </View>
+    </View>
+  </RNGHTouchable>
 );
 
 const ArticleItem = ({item, navigate}) => (
-  <View style={styles.artikel}>
-    <TouchableOpacity
-      style={styles.artikelRow}
-      onPress={() => navigate('LihatArtikel', {item})}>
+  <TouchableNativeFeedback onPress={() => navigate('LihatArtikel', {item})}>
+    <View style={styles.artikel}>
       <Image style={styles.artikelImage} source={item.image} />
       <View style={styles.artikelContent}>
         <View style={{flexDirection: 'row', alignItems: 'flex-start'}}>
@@ -55,8 +53,8 @@ const ArticleItem = ({item, navigate}) => (
           />
         </View>
       </View>
-    </TouchableOpacity>
-  </View>
+    </View>
+  </TouchableNativeFeedback>
 );
 
 const Beranda = props => {
@@ -221,8 +219,6 @@ const styles = StyleSheet.create({
     elevation: 3,
     marginBottom: 16,
     overflow: 'hidden',
-  },
-  artikelRow: {
     flexDirection: 'row',
     height: Window.isLandscape ? Window.width * 0.2 : Window.height * 0.15,
   },

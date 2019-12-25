@@ -1,5 +1,13 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, StatusBar, Animated, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  StatusBar,
+  Animated,
+  Image,
+  Share,
+} from 'react-native';
 import {CircleButton, RoundedButton} from '../Components/Button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import YouTube from 'react-native-youtube';
@@ -20,6 +28,9 @@ const ContentImage = ({source, width = Window.width, height = 100}) => {
 
 const LihatArtikel = props => {
   const [scrollY] = useState(new Animated.Value(0));
+  const [liked, setLiked] = useState(false);
+  const [favorite, setFavorite] = useState(false);
+
   const headerStyle = [
     styles.header,
     {
@@ -35,7 +46,7 @@ const LihatArtikel = props => {
       }),
       height: scrollY.interpolate({
         inputRange: [40, 280],
-        outputRange: [100, 72],
+        outputRange: [100, 80],
         extrapolate: 'clamp',
       }),
     },
@@ -64,6 +75,19 @@ const LihatArtikel = props => {
   const contents = articleItem ? articleItem.content : [];
   const coverImage = articleItem ? articleItem.image : null;
   const articleTime = articleItem ? articleItem.time : 0;
+
+  const onShare = async () => {
+    try {
+      await Share.share({
+        message:
+          'Saya sedang membaca ' +
+          articleName +
+          ' pada aplikasi Nifas Smart Care.',
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -109,19 +133,29 @@ const LihatArtikel = props => {
         </View>
         <View style={styles.actionButtonGroup}>
           <RoundedButton
-            onPress={() => {}}
+            onPress={() => setLiked(!liked)}
             style={styles.actionButton}
-            size={40}>
-            <Icon name="md-thumbs-up" size={20} color={Colors.primary} />
+            size={40}
+            pressed={liked}>
+            <Icon
+              name="md-thumbs-up"
+              size={20}
+              color={liked ? Colors.textAlt : Colors.primary}
+            />
           </RoundedButton>
           <RoundedButton
-            onPress={() => {}}
+            onPress={() => setFavorite(!favorite)}
             style={styles.actionButton}
-            size={40}>
-            <Icon name="md-star-outline" size={20} color={Colors.primary} />
+            size={40}
+            pressed={favorite}>
+            <Icon
+              name={favorite ? 'md-star' : 'md-star-outline'}
+              size={20}
+              color={favorite ? Colors.textAlt : Colors.primary}
+            />
           </RoundedButton>
           <RoundedButton
-            onPress={() => {}}
+            onPress={onShare}
             style={styles.actionButton}
             size={40}>
             <Icon name="md-share-alt" size={20} color={Colors.primary} />
