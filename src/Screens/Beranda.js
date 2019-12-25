@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   StatusBar,
   TouchableNativeFeedback,
   Image,
+  TextInput,
 } from 'react-native';
 import {
   TouchableNativeFeedback as RNGHTouchable,
@@ -16,9 +17,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {Window, Colors} from '../Consts';
 import {CircleButton} from '../Components/Button';
 import {articleList} from '../Mock';
-
-const related = [...articleList].sort((a, b) => 0.5 - Math.random());
-const artikel = articleList;
 
 const RelatedItem = ({item, navigate}) => (
   <RNGHTouchable onPress={() => navigate('LihatArtikel', {item})}>
@@ -57,16 +55,27 @@ const ArticleItem = ({item, navigate}) => (
   </TouchableNativeFeedback>
 );
 
+const randomizedArticles = [...articleList].sort((a, b) => 0.5 - Math.random());
+
 const Beranda = props => {
+  const [search, setSearch] = useState('perda');
+
   const relatedSeparator = [
     styles.separatorBar,
     {backgroundColor: '#fff', marginBottom: 0},
   ];
-
   const statusBarStyle = {
     backgroundColor: Colors.secondary,
     height: StatusBar.currentHeight,
   };
+  const mainContentStyle = [styles.mainContent, {marginTop: !search ? 80 : -8}];
+
+  const related = randomizedArticles;
+  const artikel = !search
+    ? articleList
+    : articleList.filter(item =>
+        item.title.toLowerCase().includes(search.toLowerCase()),
+      );
 
   return (
     <View style={styles.container}>
@@ -85,27 +94,37 @@ const Beranda = props => {
               <Icon name="md-list" color="#fff" size={20} />
             </View>
             <View style={styles.search}>
-              <Text style={styles.searchText}>Mau cari apa?</Text>
+              <TextInput
+                placeholder="Mau cari apa?"
+                value={search}
+                onChangeText={text => setSearch(text)}
+              />
             </View>
 
-            <Text style={styles.relatedTitle}>Informasi Pilihan</Text>
-            <View style={relatedSeparator} />
+            {!search && (
+              <View>
+                <Text style={styles.relatedTitle}>Informasi Pilihan</Text>
+                <View style={relatedSeparator} />
+              </View>
+            )}
           </View>
 
-          <RNGHFlatList
-            data={related}
-            horizontal
-            style={styles.related}
-            contentContainerStyle={styles.relatedContainer}
-            keyExtractor={(item, index) => index.toString()}
-            showsHorizontalScrollIndicator={false}
-            renderItem={({index, item}) => (
-              <RelatedItem item={item} navigate={props.navigation.navigate} />
-            )}
-          />
+          {!search && (
+            <RNGHFlatList
+              data={related}
+              horizontal
+              style={styles.related}
+              contentContainerStyle={styles.relatedContainer}
+              keyExtractor={(item, index) => index.toString()}
+              showsHorizontalScrollIndicator={false}
+              renderItem={({index, item}) => (
+                <RelatedItem item={item} navigate={props.navigation.navigate} />
+              )}
+            />
+          )}
         </View>
 
-        <View style={styles.mainContent}>
+        <View style={mainContentStyle}>
           <View style={styles.sectionRow}>
             <View>
               <Text style={styles.sectionTitle}>Konten Nifas</Text>
