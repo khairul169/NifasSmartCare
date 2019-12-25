@@ -58,7 +58,7 @@ const ArticleItem = ({item, navigate}) => (
 const randomizedArticles = [...articleList].sort((a, b) => 0.5 - Math.random());
 
 const Beranda = props => {
-  const [search, setSearch] = useState('perda');
+  const [search, setSearch] = useState('');
 
   const relatedSeparator = [
     styles.separatorBar,
