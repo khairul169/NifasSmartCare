@@ -104,10 +104,6 @@ const Beranda = props => {
             renderItem={({index, item}) => (
               <RelatedItem item={item} navigate={props.navigation.navigate} />
             )}
-            snapToInterval={Window.width * 0.8 - 16}
-            snapToAlignment="center"
-            decelerationRate="fast"
-            pagingEnabled
           />
         </View>
 
